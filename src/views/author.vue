@@ -3,7 +3,12 @@
     <div style="height=100vh">
         <h1 style="color:rgb(22, 14, 94);">Author Page</h1>
         <h2 style="color:rgb(22, 14, 94);">Name: {{$route.params.name}}</h2>
-        <h2 style="color:rgb(22, 14, 94);">Cooperated Authors: </h2>
+        <h3 style="color:rgb(22, 14, 94);">Cooperater Graph: </h3>
+        <div>
+            
+        </div>
+        <h3 style="color:rgb(22, 14, 94);">Cooperated Authors: </h3>
+
         <div v-for="(data,idx) in coopData" :key=idx >
             <router-link :to="{
             name: 'author',

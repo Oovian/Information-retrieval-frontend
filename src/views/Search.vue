@@ -238,7 +238,7 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   font-size:15px;
 }
 .b{
-  color:rgb(233, 43, 148);
+  color:rgb(22, 14, 94);
   margin-top: 8px;  
 }
 </style>
