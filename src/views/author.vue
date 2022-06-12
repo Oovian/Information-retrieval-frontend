@@ -4,11 +4,9 @@
         <h1 style="color:rgb(22, 14, 94);">Author Page</h1>
         <h2 style="color:rgb(22, 14, 94);">Name: {{$route.params.name}}</h2>
         <h3 style="color:rgb(22, 14, 94);">Cooperater Graph: </h3>
-        <div>
-            
-        </div>
-        <h3 style="color:rgb(22, 14, 94);">Cooperated Authors: </h3>
+        <div id="mynetwork" ></div>
 
+        <h3 style="color:rgb(22, 14, 94);">Cooperated Authors: </h3>
         <div v-for="(data,idx) in coopData" :key=idx >
             <router-link :to="{
             name: 'author',
@@ -39,12 +37,15 @@
     </el-scrollbar>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup >
 import { ref, reactive, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import type { FormInstance } from 'element-plus'
 import axios from 'axios'
 import { useRouter } from "vue-router";
+import * as vis from "vis";
+
+
 const getCssVarName = (type: string) => {
   return `--el-box-shadow${type ? '-' : ''}${type}`
 }
@@ -159,5 +160,10 @@ loadOptionData()
   padding: 5px;
   color:rgb(0, 0, 0);
   font-size:15px;
+}
+#mynetwork {
+  width: 300px;
+  height: 200px;
+  border: 1px solid lightgray;
 }
 </style>

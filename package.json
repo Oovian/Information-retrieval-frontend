@@ -19,6 +19,7 @@
     "echarts": "^5.3.2",
     "element-plus": "^2.2.2",
     "pdfvuer": "^2.0.1",
+    "vis": "^4.21.0-EOL",
     "vis-network": "^9.1.2",
     "vue": "^3.2.13",
     "vue-axios": "^3.4.1",
