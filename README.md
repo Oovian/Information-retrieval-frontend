@@ -3,6 +3,8 @@
 ## Project setup
 ```
 npm install
+npm install element-plus --save
+npm install --save axios vue-axios
 ```
 
 ### Compiles and hot-reloads for development
