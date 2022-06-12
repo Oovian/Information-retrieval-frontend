@@ -1,8 +1,5 @@
 <template>
-
-  <el-container class="layout-container-demo" style="height: 100%" data = str>
-    <router-view></router-view>      
-  </el-container>
+    <router-view></router-view>
 </template>
 
 <script lang="ts" setup>
@@ -12,5 +9,4 @@ import { Menu as IconMenu, Message, Setting } from '@element-plus/icons-vue'
 </script>
 
 <style scoped>
-
 </style>

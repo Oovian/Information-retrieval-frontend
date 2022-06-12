@@ -1,7 +1,6 @@
 <template>
-  <el-container class="layout-container-demo" style="height: 100%">
-    <el-aside style="width: 50% ">
-      <el-container>
+  <el-container class="layout-container-demo" >
+    <div class="left">
         <el-form :inline="true" :model="formInline" class="demo-form-inline"  ref="ruleFormRef" style="position: relative;top: 20px;" >
             <el-row>
               <el-form-item label=" " style="width: 500px">
@@ -19,7 +18,6 @@
                 <el-option label="vsm" value="vsm" />                
             </el-select>
             </el-form-item>
-            <!--rk_startegy-->
             <el-form-item label="rk_startegy">
             <el-select v-model="formInline.rk_startegy" filterable placeholder="选择或输入排序方式" >
                 <el-option label="publish_time" value="publish_time" />
@@ -47,36 +45,39 @@
               />
             </el-select>
             </el-form-item>
-            
         </el-form>
-      </el-container>          
-        <div v-for="(data,idx) in tableData" :key=idx class="c1">
-          <div class="b"><b>Title: </b>
-          <router-link :to="{
-          name: 'pdfview',
-          query:{pdfurl:data.pdf_url}}">{{ data.title}}</router-link>
-          </div>
-          <div class="b"><b> Summary:</b> 
-          <br/>
-          <span style="color: rgb(3, 3, 3)">{{data.summary}}</span>
-          </div>
-          <div class="b"><b>Authors:</b></div>
-          <div v-for="(item,id) in authorData[idx]" :key=id >
+        <el-scrollbar>
+           <div v-for="(data,idx) in tableData" :key=idx class="c1"
+            :style="{
+              boxShadow: `var(${getCssVarName('light')})`,
+            }">
+            <div class="b"><b>Title: </b>
             <router-link :to="{
-              name: 'author',
-              params: { name: item }}">{{ item}}</router-link>
+            name: 'pdfview',
+            query:{pdfurl:data.pdf_url}}">{{ data.title}}</router-link>
+            </div>
+            <div class="b"><b> Summary:</b> 
+            <br/>
+            <span style="color: rgb(3, 3, 3)">{{data.summary}}</span>
+            </div>
+            <div class="b"><b>Authors:</b></div>
+            <div v-for="(item,id) in authorData[idx]" :key=id >
+              <router-link :to="{
+                name: 'author',
+                params: { name: item }}">{{ item}}</router-link>
+            </div>
+            <div class="b"><b>Publish time: </b></div>{{data.published}}
+            <br/>
+            <div class="b"><b>Categories: </b></div>{{data.categories}}
+            <br/>
+            <div class="b"><b>Score: </b></div>{{data.score}}
           </div>
-          <div class="b"><b>Publish time: </b></div>{{data.published}}
-          <br/>
-          <div class="b"><b>Categories: </b></div>{{data.categories}}
-          <br/>
-          <div class="b"><b>Score: </b></div>{{data.score}}
-        </div>
-      </el-aside>
+        </el-scrollbar>
+    </div>
 
-      <el-main> 
-        <router-view></router-view>
-      </el-main>
+    <div class="right"> 
+      <router-view></router-view>
+    </div>
     </el-container>
   
 </template>
@@ -90,41 +91,51 @@ import type { FormInstance } from 'element-plus'
 import axios from 'axios'
 import * as echarts from 'echarts'
 import {onMounted} from "vue";
+const getCssVarName = (type: string) => {
+  return `--el-box-shadow${type ? '-' : ''}${type}`
+}
 const options = [
-  {
-    value: 'cs.AI',
-    label: 'cs.AI',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
+  {value: 'cs.HC', label: 'cs.HC'},
+  {value: 'cs.GR', label: 'cs.GR'},
+  {value: 'cs.ET', label: 'cs.ET'},
+  {value: 'cs.DS', label: 'cs.DS'},
+  {value: 'cs.IT', label: 'cs.IT'},
+  {value: 'cs.PF', label: 'cs.PF'},
+  {value: 'cs.CL', label: 'cs.CL'},
+  {value: 'cs.AR', label: 'cs.AR'},
+  {value: 'cs.CR', label: 'cs.CR'},
+  {value: 'cs.CY', label: 'cs.CY'},
+  {value: 'cs.PL', label: 'cs.PL'},
+  {value: 'cs.MM', label: 'cs.MM'},
+  {value: 'cs.MA', label: 'cs.MA'},
+  {value: 'cs.SY', label: 'cs.SY'},
+  {value: 'cs.DB', label: 'cs.DB'},
+  {value: 'cs.CG', label: 'cs.CG'},
+  {value: 'cs.CC', label: 'cs.CC'},
+  {value: 'cs.IR', label: 'cs.IR'},
+  {value: 'cs.SC', label: 'cs.SC'},
+  {value: 'cs.SD', label: 'cs.SD'},
+  {value: 'cs.SE', label: 'cs.SE'},
+  {value: 'cs.CE', label: 'cs.CE'},
+  {value: 'cs.RO', label: 'cs.RO'},
+  {value: 'cs.MS', label: 'cs.MS'},
+  {value: 'cs.GT', label: 'cs.GT'},
+  {value: 'cs.NE', label: 'cs.NE'},
+  {value: 'cs.OS', label: 'cs.OS'},
+  {value: 'cs.FL', label: 'cs.FL'},
+  {value: 'cs.LO', label: 'cs.LO'},
+  {value: 'cs.SI', label: 'cs.SI'},
+  {value: 'cs.DM', label: 'cs.DM'},
+  {value: 'cs.NA', label: 'cs.NA'},
+  {value: 'cs.NI', label: 'cs.NI'},
+  {value: 'cs.GL', label: 'cs.GL'},
+  {value: 'cs.OH', label: 'cs.OH'},
+  {value: 'cs.AI', label: 'cs.AI'},
+  {value: 'cs.DC', label: 'cs.DC'},
+  {value: 'cs.CV', label: 'cs.CV'},
+  {value: 'cs.DL', label: 'cs.DL'},
+  {value: 'cs.LG', label: 'cs.LG'}
 ]
-const value = ref('')
-let userList = [{
-  name:'q',
-  age: 2
-},
-{
-  name:'q',
-  age: 23
-},
-{
-  name:'q',
-  age: 233
-}]
 const formInline = reactive({
   query: '',
   score_strategy:'',
@@ -191,29 +202,31 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
 </script>
 
 <style scoped>
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-  
-}
-.layout-container-demo .el-aside {
+.left {
   color: var(--el-text-color-primary);
-  background: rgb(247, 240, 253);
+  height: 100vh;
+  width: 50%;
+}
+.right {
+  color: var(--el-text-color-primary);
+  background: rgb(255, 255, 255);
+  height: 100vh;
+  width: 50%;
+  margin-left: 10px;
 }
 .layout-container-demo .el-button {
-  color: rgb(63, 27, 143);
-  background-color: rgb(244, 238, 255);
-  border-color: rgb(63, 27, 143);
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(0, 0, 0);
 }
 .layout-container-demo .el-button:hover,
 .layout-container-demo .el-button:focus {
-  color: rgb(253, 253, 253);
-  background-color: rgb(70, 30, 156);
-  border-color: rgb(63, 27, 143);
+  color: rgb(0, 0, 0);
+  background-color: rgb(223, 223, 223);
+  border-color: rgb(0, 0, 0);
 }
 .layout-container-demo .el-form{
-  border-color: rgb(63, 27, 143);
+  border-color: rgb(7, 7, 7);
 }
 .c1{
   text-align: justify;
@@ -223,14 +236,9 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   padding: 5px;
   color:rgb(3, 3, 3);
   font-size:15px;
-   box-shadow:
-       inset 0 -3em 3em rgb(231, 222, 252),
-             0 0  0 2px rgb(255,255,255),
-             0.3em 0.3em 1em rgb(63, 27, 143);
 }
 .b{
   color:rgb(233, 43, 148);
-  margin-top: 8px;
-  
+  margin-top: 8px;  
 }
 </style>

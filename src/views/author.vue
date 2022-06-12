@@ -1,27 +1,37 @@
 <template>
-    <div >
-        <h1>这是authors: {{$route.params.name}}</h1>
+    <el-scrollbar>
+    <div style="height=100vh">
+        <h1 style="color:rgb(22, 14, 94);">Author Page</h1>
+        <h2 style="color:rgb(22, 14, 94);">Name: {{$route.params.name}}</h2>
+        <h2 style="color:rgb(22, 14, 94);">Cooperated Authors: </h2>
+        <div v-for="(data,idx) in coopData" :key=idx >
+            <router-link :to="{
+            name: 'author',
+            params: { name: data[0] }}">{{data[0]}}</router-link>
+        </div>
+        <div v-for="(data,idx) in authordata" :key=idx class="c1"
+        :style="{
+            boxShadow: `var(${getCssVarName('light')})`,
+        }">
+            <br/>
+            <b style="color:rgb(22, 14, 94);">Title: </b>
+            <router-link :to="{
+            name: 'pdfview',
+            query:{pdfurl:data.pdf_url}}">{{ data.title}}</router-link>
+            <br/>
+            <b style="color:rgb(22, 14, 94);">Summary: </b>
+            <br/>
+            <span>{{data.summary}}</span>
+            <br/>
+            <b style="color:rgb(22, 14, 94);">Authors: </b> {{data.authors}}
+            <br/>
+            <b style="color:rgb(22, 14, 94);">Publish time: </b>{{data.published}}
+            <br/>
+            <b style="color:rgb(22, 14, 94);">Categories: </b>{{data.categories}}
+            <br/>
+        </div>
     </div>
-    <div style="height=800px">
-    <div v-for="(data,idx) in authordata" :key=idx class="c1" >
-        <br/>
-        <span style="color:#00F">title: </span>
-        <router-link :to="{
-        name: 'pdfview',
-        query:{pdfurl:data.pdf_url}}">{{ data.title}}</router-link>
-        <br/>
-        <span style="color:#00F">Summary: </span>
-        <br/>
-        <span>{{data.summary}}</span>
-        <br/>
-        <span style="color:#00F">authors: </span> {{data.authors}}
-        <br/>
-        <span style="color:#00F">Publish time: </span>{{data.published}}
-        <br/>
-        <span style="color:#00F">Categories: </span>{{data.categories}}
-        <br/>
-    </div>
-    </div>
+    </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
@@ -30,7 +40,12 @@ import { ElMessage } from 'element-plus'
 import type { FormInstance } from 'element-plus'
 import axios from 'axios'
 import { useRouter } from "vue-router";
+const getCssVarName = (type: string) => {
+  return `--el-box-shadow${type ? '-' : ''}${type}`
+}
 let authordata = ref(reactive([
+]))
+let coopData = ref(reactive([
 ]))
 const router = useRouter();
 const name = ref(router.currentRoute.value.params.name);
@@ -59,6 +74,27 @@ watch(
                     type: 'success',
                 })
         });
+        console.log('urlstr')
+        urlstr=urlstr.concat('/cooperation')
+        console.log(urlstr)
+        axios({ method: 'GET', url: urlstr  })
+        .then(resp => {
+                if (resp.data) {
+                    coopData.value = resp.data['content']
+                }
+                else {
+                    ElMessage({
+                        message: "拉取失败: " + resp.data.msg,
+                        type: 'warning',
+                    })
+                }
+                ElMessage({
+                    showClose: true,
+                    message: '拉取到 ' + resp.data['data'].length + ' 条数据',
+                    type: 'success',
+                })
+        });
+        console.log(coopData.value.length)
       }
     );
 
@@ -69,6 +105,26 @@ const loadOptionData = () => {
         .then(resp => {
                 if (resp.data) {
                     authordata.value = resp.data['content']
+                }
+                else {
+                    ElMessage({
+                        message: "拉取失败: " + resp.data.msg,
+                        type: 'warning',
+                    })
+                }
+                ElMessage({
+                    showClose: true,
+                    message: '拉取到 ' + resp.data['data'].length + ' 条数据',
+                    type: 'success',
+                })
+        });
+        console.log('urlstr')
+        urlstr=urlstr.concat('/cooperation')
+        console.log(urlstr)
+        axios({ method: 'GET', url: urlstr  })
+        .then(resp => {
+                if (resp.data) {
+                    coopData.value = resp.data['content']
                 }
                 else {
                     ElMessage({
@@ -96,11 +152,7 @@ loadOptionData()
   margin-left: 5px;
   margin-right: 5px;
   padding: 5px;
-  color:rgb(3, 3, 3);
+  color:rgb(0, 0, 0);
   font-size:15px;
-   box-shadow:
-       inset 0 -3em 3em rgb(231, 222, 252),
-             0 0  0 2px rgb(255,255,255),
-             0.3em 0.3em 1em rgb(63, 27, 143);
 }
 </style>
