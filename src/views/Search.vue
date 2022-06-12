@@ -148,11 +148,16 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
     let urlstr = '/search';
     console.log(formInline.selected_areas.length)
     let areastr=''
-    for(var i=0;i<formInline.selected_areas.length-1;i++){
-      areastr = areastr.concat( formInline.selected_areas[i] );
-      areastr = areastr.concat( ',' );
+    if(formInline.selected_areas.length==0){
+      areastr=''
     }
-    areastr = areastr.concat( formInline.selected_areas[formInline.selected_areas.length-1] );
+    else{
+      for(var i=0;i<formInline.selected_areas.length-1;i++){
+        areastr = areastr.concat( formInline.selected_areas[i] );
+        areastr = areastr.concat( ',' );
+      }
+      areastr = areastr.concat( formInline.selected_areas[formInline.selected_areas.length-1] );
+    }
     axios({ method: 'GET', url: urlstr ,params: {selected_areas:areastr, 
               desc_order:formInline.desc_order, 
               query:formInline.query, 
@@ -195,7 +200,6 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
   background: rgb(247, 240, 253);
-  height: 700px;
 }
 .layout-container-demo .el-button {
   color: rgb(63, 27, 143);
@@ -220,7 +224,7 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   color:rgb(3, 3, 3);
   font-size:15px;
    box-shadow:
-       inset 0 -3em 3em rgb(220, 207, 250),
+       inset 0 -3em 3em rgb(231, 222, 252),
              0 0  0 2px rgb(255,255,255),
              0.3em 0.3em 1em rgb(63, 27, 143);
 }

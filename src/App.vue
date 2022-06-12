@@ -1,6 +1,6 @@
 <template>
 
-  <el-container class="layout-container-demo" style="height: 500px" data = str>
+  <el-container class="layout-container-demo" style="height: 100%" data = str>
     <router-view></router-view>      
   </el-container>
 </template>

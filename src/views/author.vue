@@ -1,8 +1,9 @@
 <template>
-    <div>
+    <div >
         <h1>这是authors: {{$route.params.name}}</h1>
     </div>
-    <div v-for="(data,idx) in authordata" :key=idx>
+    <div style="height=800px">
+    <div v-for="(data,idx) in authordata" :key=idx class="c1" >
         <br/>
         <span style="color:#00F">title: </span>
         <router-link :to="{
@@ -20,8 +21,7 @@
         <span style="color:#00F">Categories: </span>{{data.categories}}
         <br/>
     </div>
-
-
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -88,3 +88,19 @@ loadOptionData()
 
 
 </script>
+<style scoped>
+
+.c1{
+  text-align: justify;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 5px;
+  color:rgb(3, 3, 3);
+  font-size:15px;
+   box-shadow:
+       inset 0 -3em 3em rgb(231, 222, 252),
+             0 0  0 2px rgb(255,255,255),
+             0.3em 0.3em 1em rgb(63, 27, 143);
+}
+</style>
