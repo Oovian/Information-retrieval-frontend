@@ -13,7 +13,7 @@ let proxyObj_mock = {}
 
 proxyObj['/'] = {
   ws: false,
-  target: 'http://127.0.0.1:8080/',
+  target: 'http://101.43.129.108:8000/',
   changeOrigin: true,
   pathReWrite: {
     '^/': '/'
@@ -32,6 +32,6 @@ module.exports = {
   devServer: {
     host: 'localhost',
     port: 9099,
-    proxy: proxyObj_mock
+    proxy: proxyObj
   }
 }

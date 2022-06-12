@@ -11,7 +11,7 @@
                 <el-button type="primary" @click="handleSubmit(ruleFormRef)" plain>Query</el-button>
               </el-form-item>
             </el-row>
-            <el-form-item label="score_strategy">
+            <el-form-item label=" score_strategy">
             <el-select v-model="formInline.score_strategy" filterable placeholder="选择或输入算法" >
                 <el-option label="tf_idf" value="tf_idf" />
                 <el-option label="BM25" value="BM25" />
@@ -26,7 +26,7 @@
                 <el-option label="score" value="score" />
             </el-select>
             </el-form-item>
-            <el-form-item label="desc_order">
+            <el-form-item label=" desc_order">
             <el-select v-model="formInline.desc_order" filterable placeholder="选择是否降序排列" >
                 <el-option label="True" value="True" />
                 <el-option label="False" value="False" />
@@ -49,30 +49,29 @@
             </el-form-item>
             
         </el-form>
-      </el-container>
-            
-        <div v-for="(data,idx) in tableData" :key=idx>
-          <br/>
-          <span style="color:#00F">title: </span>
+      </el-container>          
+        <div v-for="(data,idx) in tableData" :key=idx class="c1">
+          <div class="b"><b>Title: </b>
           <router-link :to="{
-          path: 'pdfview',
+          name: 'pdfview',
           query:{pdfurl:data.pdf_url}}">{{ data.title}}</router-link>
+          </div>
+          <div class="b"><b> Summary:</b> 
           <br/>
-          <span style="color:#00F">Summary: </span>
-          <br/>
-          <span>{{data.summary}}</span>
-          <br/>
-          <span style="color:#00F">authors:</span>
+          <span style="color: rgb(3, 3, 3)">{{data.summary}}</span>
+          </div>
+          <div class="b"><b>Authors:</b></div>
           <div v-for="(item,id) in authorData[idx]" :key=id >
             <router-link :to="{
               name: 'author',
               params: { name: item }}">{{ item}}</router-link>
           </div>
-          <span style="color:#00F">Categories: </span>{{data.categories}}
+          <div class="b"><b>Publish time: </b></div>{{data.published}}
           <br/>
-          <span style="color:#00F">Score: </span>{{data.score}}
+          <div class="b"><b>Categories: </b></div>{{data.categories}}
+          <br/>
+          <div class="b"><b>Score: </b></div>{{data.score}}
         </div>
-        
       </el-aside>
 
       <el-main> 
@@ -93,8 +92,8 @@ import * as echarts from 'echarts'
 import {onMounted} from "vue";
 const options = [
   {
-    value: 'Option1',
-    label: 'Option1',
+    value: 'cs.AI',
+    label: 'cs.AI',
   },
   {
     value: 'Option2',
@@ -193,18 +192,41 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   min-height: 36px;
   
 }
-.layout-container-demo .el-header {
-  position: relative;
-  top: 0px;
-  background-color: var(--el-color-primary-light-7);
-  color: var(--el-text-color-primary);
-}
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
-  background: var(--el-color-primary-light-8);
-  height: 800px;
+  background: rgb(247, 240, 253);
+  height: 700px;
 }
-.layout-container-demo .el-menu {
-  border-right: none;
+.layout-container-demo .el-button {
+  color: rgb(63, 27, 143);
+  background-color: rgb(244, 238, 255);
+  border-color: rgb(63, 27, 143);
+}
+.layout-container-demo .el-button:hover,
+.layout-container-demo .el-button:focus {
+  color: rgb(253, 253, 253);
+  background-color: rgb(70, 30, 156);
+  border-color: rgb(63, 27, 143);
+}
+.layout-container-demo .el-form{
+  border-color: rgb(63, 27, 143);
+}
+.c1{
+  text-align: justify;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 5px;
+  color:rgb(3, 3, 3);
+  font-size:15px;
+   box-shadow:
+       inset 0 -3em 3em rgb(220, 207, 250),
+             0 0  0 2px rgb(255,255,255),
+             0.3em 0.3em 1em rgb(63, 27, 143);
+}
+.b{
+  color:rgb(233, 43, 148);
+  margin-top: 8px;
+  
 }
 </style>
