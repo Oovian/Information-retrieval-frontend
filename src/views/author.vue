@@ -13,6 +13,7 @@
             name: 'author',
             params: { name: data[0] }}">{{data[0]}}</router-link>
         </div>
+        <h3 style="color:rgb(22, 14, 94);">Published articles: </h3>
         <div v-for="(data,idx) in authordata" :key=idx class="c1"
         :style="{
             boxShadow: `var(${getCssVarName('light')})`,

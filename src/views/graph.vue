@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>the loading may take a few time, please wait...</h3>
     <div id="mynetwork"></div>
   </div>
 </template>
@@ -46,7 +47,10 @@ export default {
                       nodes: that.node_list,
                       edges: that.edge_list
                     };
-                    var options = {};
+                    var options = {
+                      height:'100%',
+                      width:'100%'
+                    };
                     var network = new vis.Network(container, data, options);
                 }
                 else {
@@ -58,8 +62,8 @@ export default {
 </script>
 <style scoped>
 #mynetwork {
-  width: 500px;
-  height: 500px;
+  width: 48vw;
+  height: 100vh;
   border: 1px solid lightgray;
 }
 </style>
