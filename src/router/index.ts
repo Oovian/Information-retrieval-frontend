@@ -5,6 +5,8 @@ import Search from '../views/Search.vue'
 import pdfview from '../views/pdfview.vue'
 import author from '../views/author.vue'
 import UserHome from '../views/UserHome.vue'
+import graph from '../views/graph.vue'
+
 const routes = [
   
   {
@@ -33,6 +35,11 @@ const routes = [
       component: author,
     },
     { path: '', component: UserHome },
+  {
+    path: '/graph/:name',
+    name:'graph',
+    component: graph,
+  },
   ],
   }
 ]

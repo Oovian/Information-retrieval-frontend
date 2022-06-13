@@ -4,8 +4,9 @@
         <h1 style="color:rgb(22, 14, 94);">Author Page</h1>
         <h2 style="color:rgb(22, 14, 94);">Name: {{$route.params.name}}</h2>
         <h3 style="color:rgb(22, 14, 94);">Cooperater Graph: </h3>
-        <div id="mynetwork" ></div>
-
+        <router-link :to="{
+            name: 'graph',
+            params: { name: $route.params.name }}">see graph</router-link>
         <h3 style="color:rgb(22, 14, 94);">Cooperated Authors: </h3>
         <div v-for="(data,idx) in coopData" :key=idx >
             <router-link :to="{
@@ -43,7 +44,19 @@ import { ElMessage } from 'element-plus'
 import type { FormInstance } from 'element-plus'
 import axios from 'axios'
 import { useRouter } from "vue-router";
-import * as vis from "vis";
+
+
+let nodes = [
+      	{"id": "Myriel", "group": 1},
+      	{"id": "Napoleon", "group": 1},
+        {"id": "Labarre", "group": 2},
+        {"id": "Valjean", "group": 2}
+      ]
+  let    links= [
+        {"source": "Napoleon", "target": "Myriel", "value": 1},
+        {"source": "Valjean", "target": "Labarre", "value": 1},
+        {"source": "Napoleon", "target": "Valjean", "value": 2},
+      ]
 
 
 const getCssVarName = (type: string) => {
@@ -53,6 +66,8 @@ let authordata = ref(reactive([
 ]))
 let coopData = ref(reactive([
 ]))
+let graghData = ref(reactive([
+]))
 const router = useRouter();
 const name = ref(router.currentRoute.value.params.name);
 watch(
@@ -61,7 +76,7 @@ watch(
       (val) => {
         // 修改name
         name.value = val.params.name;
-        let urlstr='/author/'.concat(name.value) 
+        let urlstr='/author/'.concat(name.value as string) 
         console.log(urlstr)
         axios({ method: 'GET', url: urlstr  })
         .then(resp => {
@@ -105,7 +120,7 @@ watch(
     );
 
 const loadOptionData = () => { 
-    let urlstr='/author/'.concat(name.value) 
+    let urlstr='/author/'.concat(name.value as string) 
         console.log(urlstr)
         axios({ method: 'GET', url: urlstr  })
         .then(resp => {
@@ -144,6 +159,7 @@ const loadOptionData = () => {
                     type: 'success',
                 })
         });
+        
 }
 
 loadOptionData()
@@ -161,9 +177,7 @@ loadOptionData()
   color:rgb(0, 0, 0);
   font-size:15px;
 }
-#mynetwork {
-  width: 300px;
-  height: 200px;
-  border: 1px solid lightgray;
+.authornet{
+    height: 50vh;
 }
 </style>

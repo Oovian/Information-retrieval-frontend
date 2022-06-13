@@ -197,7 +197,7 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
                   console.log(authorData.value[i])
                 }
                 
-        });    
+        });
 }
 </script>
 

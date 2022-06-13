@@ -9,11 +9,9 @@ import locale from 'element-plus/lib/locale/lang/zh-cn'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VuePdf from 'vue3-pdfjs'
-import * as echarts from 'echarts'
 
 const app = createApp(App)
 app.use(store).use(router).use(ElementPlus, { locale })
 app.use(VueAxios, axios) 
 app.use(VuePdf)
-app.config.globalProperties.$echarts = echarts
 app.mount('#app')
